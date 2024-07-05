@@ -48,6 +48,8 @@ import {
 import { OutputModel, OutputView, OUTPUT_WIDGET_VERSION } from './output';
 
 import * as base from '@jupyter-widgets/base';
+import * as base7 from '@jupyter-widgets/base7';
+import { JUPYTER_CONTROLS_VERSION as JUPYTER_CONTROLS7_VERSION } from '@jupyter-widgets/controls7/lib/version';
 
 // We import only the version from the specific module in controls so that the
 // controls code can be split and dynamically loaded in webpack.
@@ -493,6 +495,21 @@ export const baseWidgetsPlugin: JupyterFrontEndPlugin<void> = {
         ErrorWidgetView: base.ErrorWidgetView,
       },
     });
+
+    registry.registerWidget({
+      name: '@jupyter-widgets/base',
+      version: base7.JUPYTER_WIDGETS_VERSION,
+      exports: {
+        WidgetModel: base7.WidgetModel as any,
+        WidgetView: base7.WidgetView  as any,
+        DOMWidgetView: base7.DOMWidgetView  as any,
+        DOMWidgetModel: base7.DOMWidgetModel as any,
+        LayoutModel: base7.LayoutModel as any,
+        LayoutView: base7.LayoutView as any,
+        StyleModel: base7.StyleModel as any,
+        StyleView: base7.StyleView as any,
+      },
+    });
   },
 };
 
@@ -522,6 +539,26 @@ export const controlWidgetsPlugin: JupyterFrontEndPlugin<void> = {
               reject(err);
             },
             '@jupyter-widgets/controls'
+          );
+        });
+      },
+    });
+
+    registry.registerWidget({
+      name: '@jupyter-widgets/controls',
+      version: JUPYTER_CONTROLS7_VERSION,
+      exports: () => {
+        return new Promise((resolve, reject) => {
+          (require as any).ensure(
+            ['@jupyter-widgets/controls7'],
+            (require: NodeRequire) => {
+              // eslint-disable-next-line @typescript-eslint/no-var-requires
+              resolve(require('@jupyter-widgets/controls7'));
+            },
+            (err: any) => {
+              reject(err);
+            },
+            '@jupyter-widgets/controls7'
           );
         });
       },

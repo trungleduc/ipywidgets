@@ -48,7 +48,9 @@
   "dependencies": {
     "@jupyter-widgets/base": "^6.0.8",
     "@jupyter-widgets/base-manager": "^1.0.9",
+    "@jupyter-widgets/base7": "npm:@jupyter-widgets/base@4.1.6",
     "@jupyter-widgets/controls": "^5.0.9",
+    "@jupyter-widgets/controls7": "npm:@jupyter-widgets/controls@3.1.6",
     "@jupyter-widgets/output": "^6.0.8",
     "@jupyterlab/application": "^3.0.0 || ^4.0.0",
     "@jupyterlab/apputils": "^3.0.0 || ^4.0.0",
